@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #213555;
+        height: 100vh;
+        width: 100dvw;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      .container {
+        text-align: center;
+        width: 80%;
+        padding: 30px;
+        border-radius: 6px;
+        background-color: #f0f0f0;
+        overflow: hidden;
+      }
+
+      .title {
+        font-size: 22px;
+      }
+
+      .textarea {
+        width: 100%;
+        border: none;
+        padding: 16px;
+        border-radius: 4px;
+        border: 3px solid #ced4da;
+        margin: 20px auto 40px auto;
+        outline: none;
+        transition: all 0.2s;
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      .textarea::placeholder {
+        color: #868e96;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      .result__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .result {
+        border: 2px solid #1c7ed6;
+        flex: 0 0 200px;
+        border-radius: 5px;
+        align-self: stretch;
+        overflow: hidden;
+      }
+
+      .result__num {
+        font-size: 30px;
+        color: #fff;
+        font-weight: 400;
+        background-color: #1c7ed6;
+        padding: 20px;
+      }
+
+      .result__text {
+        font-size: 18px;
+        color: #213555;
+        padding: 20px;
+        line-height: 1.6;
+        background-color: #fff;
+      }
+
+      .btn {
+        border: none;
+        background-color: #1864ab;
+        color: #fff;
+        font-size: 18px;
+        padding: 14px 28px;
+        border-radius: 5px;
+        margin-top: 40px;
+        transition: all 0.2s;
+        outline: none;
+      }
+
+      .btn:hover {
+        background: #1c7ed6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p class="title">Word Counter</p>
+
+      <textarea class="textarea" name="" id="" cols="30" rows="3"></textarea>
+
+      <div class="result__container">
+        <div class="result">
+          <h2 class="result__num all__character">01</h2>
+          <p class="result__text">Characters With All Spaces</p>
+        </div>
+        <div class="result">
+          <h2 class="result__num only__character">02</h2>
+          <p class="result__text">Only Characters</p>
+        </div>
+        <div class="result">
+          <h2 class="result__num words">03</h2>
+          <p class="result__text">Words</p>
+        </div>
+        <div class="result">
+          <h2 class="result__num sentences">04</h2>
+          <p class="result__text">Sentences</p>
+        </div>
+      </div>
+      <button class="btn">Generate QR Code</button>
+    </div>
+
+    <script>
+      const allCharacter = document.querySelector('.all__character');
+      const onlyCharacter = document.querySelector('.only__character');
+      const words = document.querySelector('.words');
+      const sentences = document.querySelector('.sentences');
+      const countWordBtn = document.querySelector('.btn');
+      const characterInputField = document.querySelector('.textarea');
+
+      // Character without spaces function
+      const characterWithoutSpace = function (str) {
+        const stringWithoutSpaces = str.replace(/\s+/g, '');
+        return stringWithoutSpaces.length;
+      };
+
+      // Word count function
+      const countWords = function (str) {
+        const words = str.split(/\s+/);
+        const filteredWords = words.filter(word => word !== '');
+        return filteredWords.length;
+      };
+
+      // All Sentence Count Function
+      function countSentences(str) {
+        const sentences = str.split(/[.!?]+/);
+        const filteredSentences = sentences.filter(sentence => sentence.trim() !== '');
+
+        return filteredSentences.length;
+      }
+
+      countWordBtn.addEventListener('click', function () {
+        // Words Count
+        words.textContent = countWords(characterInputField.value);
+
+        // All Character Count
+        allCharacter.textContent = characterInputField.value.length;
+
+        // Character Without Spaces
+        onlyCharacter.textContent = characterWithoutSpace(characterInputField.value);
+
+        // Sentence Count
+        sentences.textContent = countSentences(characterInputField.value);
+      });
+    </script>
+  </body>
+</html>
